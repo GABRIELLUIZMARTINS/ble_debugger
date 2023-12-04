@@ -12,6 +12,10 @@
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
 #include "sdkconfig.h"
+#include "esp_bt.h"
+#include "esp_system.h"
+#include "esp_eth.h"
+#include "esp_netif.h"
 
 char *TAG = "BLE-Server";
 uint8_t ble_addr_type;
@@ -104,16 +108,24 @@ void host_task(void *param)
     nimble_port_run(); // This function will return only when nimble_port_stop() is executed
 }
 
+void set_base_mac_address() {
+    uint8_t mac[6] = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC};
+    esp_base_mac_addr_set(mac);
+}
+
 void app_main()
 {
-    nvs_flash_init();                          // 1 - Initialize NVS flash using
-    esp_nimble_hci_and_controller_init();      // 2 - Initialize ESP controller
-    nimble_port_init();                        // 3 - Initialize the host stack
-    ble_svc_gap_device_name_set("BLE-Server"); // 4 - Initialize NimBLE configuration - server name
-    ble_svc_gap_init();                        // 4 - Initialize NimBLE configuration - gap service
-    ble_svc_gatt_init();                       // 4 - Initialize NimBLE configuration - gatt service
-    ble_gatts_count_cfg(gatt_svcs);            // 4 - Initialize NimBLE configuration - config gatt services
-    ble_gatts_add_svcs(gatt_svcs);             // 4 - Initialize NimBLE configuration - queues gatt services.
-    ble_hs_cfg.sync_cb = ble_app_on_sync;      // 5 - Initialize application
-    nimble_port_freertos_init(host_task);      // 6 - Run the thread
+    nvs_flash_init();                               // 1 - Initialize NVS flash using
+    set_base_mac_address();                         // 0 - Configurar o endereço MAC base
+    esp_nimble_hci_and_controller_init();           // 2 - Initialize ESP controller
+    nimble_port_init();                             // 3 - Initialize the host stack
+
+    ble_svc_gap_device_name_set("Bluetooth-Server");// 5 - Initialize NimBLE configuration - server name
+    ble_svc_gap_init();                             // 5 - Initialize NimBLE configuration - gap service
+    ble_svc_gatt_init();                            // 5 - Initialize NimBLE configuration - gatt service
+    ble_gatts_count_cfg(gatt_svcs);                 // 5 - Initialize NimBLE configuration - config gatt services
+    ble_gatts_add_svcs(gatt_svcs);                  // 5 - Initialize NimBLE configuration - queues gatt services.
+
+    ble_hs_cfg.sync_cb = ble_app_on_sync;           // 6 - Initialize application
+    nimble_port_freertos_init(host_task);           // 7 - Run the thread
 }
