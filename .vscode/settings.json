@@ -11,5 +11,14 @@
     ],
     "idf.port": "/dev/ttyS4",
     "idf.pythonBinPath": "/home/usuario/.espressif/python_env/idf4.4_py3.10_env/bin/python",
-    "idf.toolsPath": "/home/usuario/.espressif"
+    "idf.toolsPath": "/home/usuario/.espressif",
+    "files.associations": {
+        "nimble_port_freertos.h": "c",
+        "ble_svc_gap.h": "c",
+        "ble_svc_gatt.h": "c",
+        "esp_bt_defs.h": "c",
+        "tcpip_adapter.h": "c",
+        "esp_netif.h": "c"
+    },
+    "idf.flashType": "JTAG"
 }
