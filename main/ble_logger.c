@@ -1,38 +1,13 @@
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/event_groups.h"
-#include "esp_event.h"
-#include "nvs_flash.h"
-#include "esp_log.h"
-#include "esp_nimble_hci.h"
-#include "nimble/nimble_port.h"
-#include "nimble/nimble_port_freertos.h"
-#include "host/ble_hs.h"
-#include "services/gap/ble_svc_gap.h"
-#include "services/gatt/ble_svc_gatt.h"
-#include "sdkconfig.h"
-#include "esp_bt.h"
-#include "esp_system.h"
-#include "esp_eth.h"
-#include "esp_netif.h"
 #include <string.h> // só pra questão de log
+#include "../include/ble_logger.h"
 
-char *TAG = "BLE-Server";
-uint8_t ble_addr_type;
-void ble_app_advertise(void);
-
-typedef struct ble_data
-{
-    char data[100];
-    uint16_t size;
-}ble_data_t;
-ble_data_t my_ble_data;
+char *TAG = "BLE-Logger";
+ble_data_t ble_data;
 
 void ble_update_data(char *data)
 {
-    strcpy(my_ble_data.data, data);
-    my_ble_data.size = strlen(my_ble_data.data);
+    strcpy(ble_data.data, data);
+    ble_data.size = strlen(ble_data.data);
 }
 
 // Write data to ESP32 defined as server
@@ -45,7 +20,7 @@ static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_g
 // Read data from ESP32 defined as server
 static int device_read(uint16_t con_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
-    os_mbuf_append(ctxt->om, my_ble_data.data, my_ble_data.size);
+    os_mbuf_append(ctxt->om, ble_data.data, ble_data.size);
     return 0;
 }
 
@@ -106,13 +81,13 @@ void ble_app_advertise(void)
     memset(&adv_params, 0, sizeof(adv_params));
     adv_params.conn_mode = BLE_GAP_CONN_MODE_UND; // connectable or non-connectable
     adv_params.disc_mode = BLE_GAP_DISC_MODE_GEN; // discoverable or non-discoverable
-    ble_gap_adv_start(ble_addr_type, NULL, BLE_HS_FOREVER, &adv_params, ble_gap_event, NULL);
+    ble_gap_adv_start(ble_data.ble_addr_type, NULL, BLE_HS_FOREVER, &adv_params, ble_gap_event, NULL);
 }
 
 // The application
 void ble_app_on_sync(void)
 {
-    ble_hs_id_infer_auto(0, &ble_addr_type); // Determines the best address type automatically
+    ble_hs_id_infer_auto(0, &ble_data.ble_addr_type); // Determines the best address type automatically
     ble_app_advertise();                     // Define the BLE connection
 }
 
@@ -131,8 +106,6 @@ void test_ble(void *pvParameters) {
     int i = 0;
     char buffer[20];
     while (true) {
-        
-
         sprintf(buffer, "%d", i++);
         printf("Tarefa em execução: %s\n",buffer);
         ble_update_data(buffer);
@@ -140,9 +113,9 @@ void test_ble(void *pvParameters) {
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
-void app_main()
+
+void init_ble_logger()
 {
-    nvs_flash_init();                               // 1 - Initialize NVS flash using
     set_base_mac_address();                         // 0 - Configurar o endereço MAC base
     esp_nimble_hci_and_controller_init();           // 2 - Initialize ESP controller
     nimble_port_init();                             // 3 - Initialize the host stack
@@ -156,4 +129,10 @@ void app_main()
     ble_hs_cfg.sync_cb = ble_app_on_sync;           // 6 - Initialize application
     xTaskCreate(&test_ble, "test_ble", 2048, NULL, 5, NULL);
     nimble_port_freertos_init(host_task);           // 7 - Run the thread
+}
+
+void app_main()
+{
+    nvs_flash_init();                               // 1 - Initialize NVS flash using
+    init_ble_logger();
 }
