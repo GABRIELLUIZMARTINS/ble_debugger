@@ -16,10 +16,24 @@
 #include "esp_system.h"
 #include "esp_eth.h"
 #include "esp_netif.h"
+#include <string.h> // só pra questão de log
 
 char *TAG = "BLE-Server";
 uint8_t ble_addr_type;
 void ble_app_advertise(void);
+
+typedef struct ble_data
+{
+    char data[100];
+    uint16_t size;
+}ble_data_t;
+ble_data_t my_ble_data;
+
+void ble_update_data(char *data)
+{
+    strcpy(my_ble_data.data, data);
+    my_ble_data.size = strlen(my_ble_data.data);
+}
 
 // Write data to ESP32 defined as server
 static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
@@ -31,7 +45,7 @@ static int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_g
 // Read data from ESP32 defined as server
 static int device_read(uint16_t con_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
-    os_mbuf_append(ctxt->om, "Data from the server", strlen("Data from the server"));
+    os_mbuf_append(ctxt->om, my_ble_data.data, my_ble_data.size);
     return 0;
 }
 
@@ -113,6 +127,19 @@ void set_base_mac_address() {
     esp_base_mac_addr_set(mac);
 }
 
+void test_ble(void *pvParameters) {
+    int i = 0;
+    char buffer[20];
+    while (true) {
+        
+
+        sprintf(buffer, "%d", i++);
+        printf("Tarefa em execução: %s\n",buffer);
+        ble_update_data(buffer);
+
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
 void app_main()
 {
     nvs_flash_init();                               // 1 - Initialize NVS flash using
@@ -127,5 +154,6 @@ void app_main()
     ble_gatts_add_svcs(gatt_svcs);                  // 5 - Initialize NimBLE configuration - queues gatt services.
 
     ble_hs_cfg.sync_cb = ble_app_on_sync;           // 6 - Initialize application
+    xTaskCreate(&test_ble, "test_ble", 2048, NULL, 5, NULL);
     nimble_port_freertos_init(host_task);           // 7 - Run the thread
 }
