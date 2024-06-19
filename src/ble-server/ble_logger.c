@@ -1,4 +1,4 @@
-#include "../include/ble_logger.h"
+#include "ble_logger.h"
 
 char *TAG = "BLE-Logger";
 ble_data_t ble_data;

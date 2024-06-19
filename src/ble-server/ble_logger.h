@@ -6,7 +6,6 @@
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
 #include "esp_event.h"
-#include "nvs_flash.h"
 #include "esp_log.h"
 #include "esp_nimble_hci.h"
 #include "nimble/nimble_port.h"
@@ -35,6 +34,5 @@ ble_data_t my_ble_data;
 
 void ble_update_data(char *data);
 esp_err_t init_ble_logger();
-void app_main();
 
 #endif

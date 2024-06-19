@@ -1,2 +1,2 @@
-idf_component_register( SRCS "ble_logger.c" "test.c"
+idf_component_register( SRCS "test.c"
                         INCLUDE_DIRS ".")             

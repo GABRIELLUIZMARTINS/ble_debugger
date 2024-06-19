@@ -13,7 +13,7 @@ A recommended way is to follow the instructions on a [docs page](https://docs.es
 
 ## Example folder contents
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+The project **sample_project** contains one source file in C language [main.c](src/main/main.c). The file is located in folder [main](src/main).
 
 ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
 files that provide set of directives and instructions describing the project's source files and targets
@@ -30,3 +30,5 @@ Below is short explanation of remaining files in the project folder.
 ```
 Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
 They are not used or needed when building with CMake and idf.py.
+
+<p>Here is an example of AppleScript:</p>
