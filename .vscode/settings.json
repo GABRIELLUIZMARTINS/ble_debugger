@@ -1,24 +1,26 @@
 {
     "C_Cpp.intelliSenseEngine": "default",
     "idf.adapterTargetName": "esp32s3",
-    "idf.customExtraPaths": "/home/docol/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin:/home/docol/.espressif/tools/xtensa-esp32s2-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s2-elf/bin:/home/docol/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s3-elf/bin:/home/docol/.espressif/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin:/home/docol/.espressif/tools/esp32ulp-elf/2.28.51-esp-20191205/esp32ulp-elf-binutils/bin:/home/docol/.espressif/tools/esp32s2ulp-elf/2.28.51-esp-20191205/esp32s2ulp-elf-binutils/bin:/home/docol/.espressif/tools/cmake/3.20.3/bin:/home/docol/.espressif/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/bin:/home/docol/.espressif/tools/ninja/1.10.2",
+    "idf.customExtraPaths": "/home/${USER}/.espressif/tools/xtensa-esp32-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32-elf/bin:/home/${USER}/.espressif/tools/xtensa-esp32s2-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s2-elf/bin:/home/${USER}/.espressif/tools/xtensa-esp32s3-elf/esp-2021r2-patch3-8.4.0/xtensa-esp32s3-elf/bin:/home/${USER}/.espressif/tools/riscv32-esp-elf/esp-2021r2-patch3-8.4.0/riscv32-esp-elf/bin:/home/${USER}/.espressif/tools/esp32ulp-elf/2.28.51-esp-20191205/esp32ulp-elf-binutils/bin:/home/${USER}/.espressif/tools/esp32s2ulp-elf/2.28.51-esp-20191205/esp32s2ulp-elf-binutils/bin:/home/${USER}/.espressif/tools/cmake/3.20.3/bin:/home/${USER}/.espressif/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/bin:/home/${USER}/.espressif/tools/ninja/1.10.2",
     "idf.customExtraVars": {
-        "OPENOCD_SCRIPTS": "/home/docol/.espressif/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/share/openocd/scripts"
+        "OPENOCD_SCRIPTS": "/home/${USER}/.espressif/tools/openocd-esp32/v0.11.0-esp32-20211220/openocd-esp32/share/openocd/scripts"
     },
-    "idf.espIdfPath": "/home/docol/esp/esp-idf",
+    "idf.espIdfPath": "/home/${USER}/esp/esp-idf",
     "idf.openOcdConfigs": [
         "board/esp32s3-builtin.cfg"
     ],
     "idf.port": "/dev/ttyACM0",
-    "idf.pythonBinPath": "/home/docol/.espressif/python_env/idf4.4_py3.10_env/bin/python",
-    "idf.toolsPath": "/home/docol/.espressif",
+    "idf.pythonBinPath": "/home/${USER}/.espressif/python_env/idf4.4_py3.10_env/bin/python",
+    "idf.toolsPath": "/home/${USER}/.espressif",
     "files.associations": {
         "nimble_port_freertos.h": "c",
         "ble_svc_gap.h": "c",
         "ble_svc_gatt.h": "c",
         "esp_bt_defs.h": "c",
         "tcpip_adapter.h": "c",
-        "esp_netif.h": "c"
+        "esp_netif.h": "c",
+        "stdio.h": "c",
+        "freertos.h": "c"
     },
     "idf.flashType": "JTAG"
 }

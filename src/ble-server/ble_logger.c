@@ -20,18 +20,26 @@ static void set_base_mac_address();
 
 // Array of pointers to other service definitions
 // UUID - Universal Unique Identifier
-static const struct ble_gatt_svc_def gatt_svcs[] = {
-    {.type = BLE_GATT_SVC_TYPE_PRIMARY,
-     .uuid = BLE_UUID16_DECLARE(0x180),  // Define UUID for device type
-     .characteristics =
-         (struct ble_gatt_chr_def[]){{.uuid = BLE_UUID16_DECLARE(0xFEF4),  // Define UUID for reading
-                                      .flags = BLE_GATT_CHR_F_READ,
-                                      .access_cb = device_read},
-                                     {.uuid = BLE_UUID16_DECLARE(0xDEAD),  // Define UUID for writing
-                                      .flags = BLE_GATT_CHR_F_WRITE,
-                                      .access_cb = device_write},
-                                     {0}}},
-    {0}};
+static const struct ble_gatt_svc_def gatt_svcs[] = 
+{
+    {
+        .type = BLE_GATT_SVC_TYPE_PRIMARY,
+        .uuid = BLE_UUID16_DECLARE(CONFIG_UUID_DEVICE_TYPE),  // Define UUID for device type
+        .characteristics = (struct ble_gatt_chr_def[]){   
+        {   
+            .uuid = BLE_UUID16_DECLARE(CONFIG_UUID_READING),  // Define UUID for reading
+            .flags = BLE_GATT_CHR_F_READ,
+            .access_cb = device_read
+        },{   
+            .uuid = BLE_UUID16_DECLARE(CONFIG_UUID_WRITING),  // Define UUID for writing
+            .flags = BLE_GATT_CHR_F_WRITE,
+            .access_cb = device_write
+        },
+        {0}
+        }
+    },
+    {0}
+};
 
 void ble_update_data(char *data)
 {
@@ -66,7 +74,7 @@ static void disconnect_timer_callback(TimerHandle_t xTimer)
 // Function to start the disconnection timer
 static void start_disconnect_timer()
 {
-    disconnect_timer = xTimerCreate("DisconnectTimer", pdMS_TO_TICKS(DISCONNECT_TIMEOUT_MS), pdFALSE,
+    disconnect_timer = xTimerCreate("DisconnectTimer", pdMS_TO_TICKS(CONFIG_DISCONNECT_TIMEOUT ), pdFALSE,
                                     (void *)0, disconnect_timer_callback);
     if (disconnect_timer != NULL)
     {
@@ -152,7 +160,6 @@ static void ble_app_on_sync(void)
     ble_app_advertise();                               // Define the BLE connection
 }
 
-// The infinite task
 static void host_task(void *param)
 {
     nimble_port_run();  // This function will return only when nimble_port_stop() is executed
@@ -164,7 +171,7 @@ static void set_base_mac_address()
     esp_base_mac_addr_set(mac);
 }
 
-esp_err_t init_ble_logger()
+esp_err_t init_ble_server()
 {
     esp_err_t ret_code = ESP_OK;
 

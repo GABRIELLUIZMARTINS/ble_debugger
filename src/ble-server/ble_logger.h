@@ -19,20 +19,17 @@
 #include "esp_netif.h"
 #include "freertos/timers.h"
 
-#define DISCONNECT_TIMEOUT_MS 12000  // 120000 = 120 seconds
-
 /* Check if the parameter is not NULL */
 #define IS_VALID(parameter) ((parameter) != (NULL) ? (true) : (false))
 
 typedef struct ble_data
 {
-    char data[100];
+    char data[CONFIG_DATA_BUFFER_SIZE];
     uint16_t size;
     uint8_t ble_addr_type;
 } ble_data_t;
-ble_data_t my_ble_data;
 
 void ble_update_data(char *data);
-esp_err_t init_ble_logger();
+esp_err_t init_ble_server();
 
 #endif

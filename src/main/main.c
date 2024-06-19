@@ -11,13 +11,13 @@ void example_ble(void *pvParameters) {
         printf("Tarefa em execução: %s\n",buffer);
         ble_update_data(buffer);
 
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(pdMS_TO_TICKS(1000)); 
     }
 }
 
 void app_main()
 {
     nvs_flash_init();                               // 1 - Initialize NVS flash using
-    init_ble_logger();
+    init_ble_server();
     xTaskCreate(&example_ble, "example_ble", 2048, NULL, 5, NULL);
 }

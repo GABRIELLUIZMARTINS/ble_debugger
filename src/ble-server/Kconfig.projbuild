@@ -1,0 +1,34 @@
+menu "BLE Server - Settings"
+    config UUID_DEVICE_TYPE
+        hex 
+        prompt "UUID for device type"
+        default 0x180
+        help
+            UUID for device type
+    config UUID_READING
+        hex
+        prompt "UUID for reading"
+        default 0xFEF4
+        help
+            UUID for reading
+    config UUID_WRITING
+        hex 
+        prompt "UUID for writing"
+        default 0xDEAD
+        help
+            UUID for writing
+
+    config DATA_BUFFER_SIZE
+        int  
+        prompt "Data buffer size"
+        default 100
+        help
+            Data buffer size
+    config DISCONNECT_TIMEOUT
+        int  
+        prompt "Time to start the disconnection"
+        default 12000
+        help
+            Time to start the disconnection
+
+endmenu
