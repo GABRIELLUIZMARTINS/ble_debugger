@@ -132,6 +132,7 @@ static int ble_gap_event(struct ble_gap_event *event, void *arg)
 
     return 0;
 }
+
 // Define the BLE connection
 static void ble_app_advertise(void)
 {
@@ -160,17 +161,33 @@ static void ble_app_on_sync(void)
     ble_app_advertise();                               // Define the BLE connection
 }
 
+// The infinite task
 static void host_task(void *param)
 {
     nimble_port_run();  // This function will return only when nimble_port_stop() is executed
 }
 
+// Set mac address
 static void set_base_mac_address()
 {
-    uint8_t mac[6] = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC};
-    esp_base_mac_addr_set(mac);
+    esp_err_t ret;
+    uint8_t mac[6] = {  CONFIG_MAC_0X0,   
+                        CONFIG_MAC_0X1, 
+                        CONFIG_MAC_0X2, 
+                        CONFIG_MAC_0X3, 
+                        CONFIG_MAC_0X4, 
+                        CONFIG_MAC_0X5
+                        };
+    ret = esp_base_mac_addr_set(mac);
+    if (ret == ESP_ERR_INVALID_ARG)
+    {
+        uint8_t mac_default[6] = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC};
+        esp_base_mac_addr_set(mac_default);
+    }
+
 }
 
+// Initializa bluetooth low energy
 esp_err_t init_ble_server()
 {
     esp_err_t ret_code = ESP_OK;

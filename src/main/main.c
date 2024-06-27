@@ -17,7 +17,7 @@ void example_ble(void *pvParameters) {
 
 void app_main()
 {
-    nvs_flash_init();                               // 1 - Initialize NVS flash using
-    init_ble_server();
-    xTaskCreate(&example_ble, "example_ble", 2048, NULL, 5, NULL);
+    nvs_flash_init();                                               // 1 - Initialize NVS flash 
+    init_ble_server();                                              // 2 - Initialize BLE server
+    xTaskCreate(&example_ble, "Example BLE", 2048, NULL, 5, NULL);  // 3 - Create task example
 }
