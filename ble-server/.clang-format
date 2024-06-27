@@ -1,0 +1,36 @@
+# See https://clang.llvm.org/docs/ClangFormatStyleOptions.html for more info
+
+# Style complying with Google’s C++ style guide
+BasedOnStyle: Google
+IndentWidth: 4
+
+# Main formatter language
+Language: Cpp
+
+# Align options
+AlignOperands: AlignAfterOperator # Arithmetic operands align on line break
+AlignConsecutiveMacros: Consecutive # Align defines in consecutive lines
+AlignAfterOpenBracket: Align # Align arguments in long function calls
+AlignTrailingComments: true # Align consecutive comments
+
+# Alow empty code blocks. Ex: while(true) {};
+AllowShortBlocksOnASingleLine: Empty
+
+# Disable single line code blocks
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# Break options
+BreakStringLiterals: true
+BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBraces: Allman
+
+# Misc options
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AlwaysBreakBeforeMultilineStrings: false
+
+# Code column limit (max chars in one line)
+ColumnLimit: 110
