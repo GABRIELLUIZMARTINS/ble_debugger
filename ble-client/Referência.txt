@@ -1,0 +1,2 @@
+Utilizado com refência o exemplo da Lib bless (https://github.com/kevincar/bless/tree/master)
+https://github.com/kevincar/bless/blob/master/examples/server.py
