@@ -1,0 +1,71 @@
+menu "BLE Server - Settings"
+    config UUID_DEVICE_TYPE
+        hex 
+        prompt "UUID for device type"
+        default 0x180
+        help
+            UUID for device type
+    config UUID_READING
+        hex
+        prompt "UUID for reading"
+        default 0xFEF4
+        help
+            UUID for reading
+    config UUID_WRITING
+        hex 
+        prompt "UUID for writing"
+        default 0xDEAD
+        help
+            UUID for writing
+
+    config DATA_BUFFER_SIZE
+        int  
+        prompt "Data buffer size"
+        default 100
+        help
+            Data buffer size
+    config DISCONNECT_TIMEOUT
+        int  
+        prompt "Time to start the disconnection"
+        default 12000
+        help
+            Time to start the disconnection
+    menu "Mac Address - Base MAC must be a unicast MAC"
+        config MAC_0X0
+            hex 
+            prompt "Position - [0]"
+            default 0x12
+            help
+                Mac Address position 0x0
+        config MAC_0X1
+            hex 
+            prompt "Position - [1]"
+            default 0x34
+            help
+                Mac Address position 0x1
+        config MAC_0X2
+            hex 
+            prompt "Position - [2]"
+            default 0x56
+            help
+                Mac Address position 0x2
+        config MAC_0X3
+            hex 
+            prompt "Position - [3]"
+            default 0x78
+            help
+                Mac Address position 0x3
+        config MAC_0X4
+            hex 
+            prompt "Position - [4]"
+            default 0x9A
+            help
+                Mac Address position 0x4
+        config MAC_0X5
+            hex 
+            prompt "Position - [5]"
+            default 0xBC
+            help
+                Mac Address position 0x5
+    endmenu
+endmenu
