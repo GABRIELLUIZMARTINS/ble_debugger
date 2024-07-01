@@ -1,6 +1,6 @@
-#include "ble_logger.h"
+#include "ble_sender.h"
 
-char *TAG = "BLE-Logger";
+char *TAG = "BLE Sender";
 ble_data_t ble_data;
 TimerHandle_t disconnect_timer;
 

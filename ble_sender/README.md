@@ -1,4 +1,4 @@
-# _BLE LOGGER_
+# _BLE SENDER_
 
 This is an example of how to use bluetooth as a logger to debug applications.
 
@@ -8,7 +8,7 @@ You needs configure NimBLE in menuconfig:
 
 Component config --> Bluetooth --> Bluetooth Host (NimBLE - BLE only) --> NimBLE - BLE only
 
-## BLE Server
+## BLE Sender
 
 In this implementation it is possible to send strings through the `ble_update_data()` function that updates the value that is sent.
 
@@ -19,6 +19,6 @@ Firmware files are distributed as follows:
 ├── .vscode         # Visual Studio Code Workspace files
 ├── build           # Firmware build files (automatically generated)
 └──  src            # Source code
-    ├── main                            # Application example
-    └── espnow_sender/espnow_receiver   # Implementation 
+    ├── main                # Application example
+    └── ble_sender          # Implementation 
 ```
